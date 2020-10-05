@@ -94,4 +94,21 @@ export class ApiService {
 
     return this.httpClient.get<any>(AppUtils.RESEND_REGISTER_TOKEN_URL, options);
   }
+
+  getUsers(): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}`, AppUtils.OPTIONS_OBJECTO);
+  }
+
+  getRoles(roles: Array<any>) {
+    let role: any;
+
+    if( this.isAuthenticate() && roles) {
+      if( roles.length > 0 ){
+        roles.forEach(r =>{
+          role = r.name;
+        });
+      }
+      return role;
+    }
+  }
 }
