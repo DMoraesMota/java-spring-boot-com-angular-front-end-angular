@@ -119,5 +119,8 @@ export class ApiService {
   getUserById(id: string): Observable<any> {
     return this.httpClient.get<any>(`${this.baseUrl}/${id}`, AppUtils.OPTIONS_OBJECTO);
   }
-  
+
+  updateUser(user: UserDTO): Observable<any> {
+    return this.httpClient.put<any>(`${this.baseUrl}/${user.id}`, user, AppUtils.OPTIONS_OBJECTO);
+  }
 }
