@@ -16,7 +16,9 @@ import { MessageService } from './message.service';
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor( private ApiService: ApiService, private router:Router) { }
+  constructor(  private ApiService: ApiService, 
+                private router:Router,
+                private messageService: MessageService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token: string = localStorage.getItem('accessToken');
@@ -36,23 +38,23 @@ export class InterceptorService implements HttpInterceptor {
         if(error instanceof HttpErrorResponse){
           switch (error.status) {
             case 409:
-                console.log('Error 409');
+                this.messageService.showWarning('Falha de registro', 'O e-mail utilizado no cadastro está sendo usado por outro usuário');
                 return this.handleErrorGeneral(error);
             case 404:
-              console.log('Error 404');
+              this.messageService.showError('Usuário não encontrado', 'Favor verificar se seu e-mail foi digitado corretamente';
               return this.handleErrorGeneral(error);
             case 403:
               console.log('Error 403');
-              return this.getAccessToken(request, next);;
+              return this.getAccessToken(request, next);
             case 0:
               console.log('Error 0');
               localStorage.removeItem('accessToken');
               return this.getAccessToken(request, next);
             case 401:
-              console.log('Error 401');
+              this.messageService.showError('', error.error.message);
               return  this.router.navigate(['login']);
             case 400:
-              console.log('Error 400');
+              this.messageService.showError('Falha de autenticação', 'Usuário ou senha inválidos');
               return  this.router.navigate(['login']);
             case 303:
               console.log('Error 303');
@@ -77,8 +79,7 @@ export class InterceptorService implements HttpInterceptor {
   handleErrorGeneral(error){
 
     if (error.status === 409 || error.status === 404 ){
-      console.log(error.status);
-      return EmptyObservable.create();      
+      return this.ApiService.logout();    
     }
     return EmptyObservable.create();
 
@@ -86,8 +87,10 @@ export class InterceptorService implements HttpInterceptor {
 
   handle303Error(error){
     if(error.error.message === 'invalidToken') {
+      this.messageService.showError('Verificação de registro', 'Token inválido, favor solicitar um novo token');
       return this.router.navigate(['resend-register-token']);
     } else if(error.error.message === 'expired') {
+      this.messageService.showError('Verificação de registro', 'Token expirou, favor solicitar um novo token');
       return this.router.navigate(['resend-register-token']);
     }
 

@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/core/api.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
+import { MessageService } from 'src/app/core/message.service';
 
 @Component({
   selector: 'app-register-user',
@@ -19,14 +20,16 @@ export class RegisterConfirmationComponent implements OnInit {
   constructor(private apiService: ApiService, 
               private location: Location,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
       this.token = this.route.snapshot.paramMap.get('token');
       this.apiService.confirmationRegisterToken(this.token).subscribe(register => {
-          console.log('Confirmação de registro de OK!!');
-          this.router.navigate(['login']);
+        this.messageService.showSucess('Registro validado', 'Usuário registrado com sucesso');
+        this.router.navigate(['login']);
       }, error => {
+        this.messageService.showError('Problema na confirmação do registro', 'Falha na confirmação de registro');
         console.log('Erro na confirmação de registro!! ', error);
         this.router.navigate(['resend-register-token']);
       })

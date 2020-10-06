@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/api.service';
+import { MessageService } from 'src/app/core/message.service';
 import { UserLogin } from 'src/app/core/model/login';
 
 @Component({
@@ -12,16 +13,18 @@ export class LoginUserComponent implements OnInit {
 
   user = new UserLogin();
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, 
+              private router: Router,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
   public login(){
     this.apiService.login(this.user).subscribe(data => {
-      console.log("LOGIN EFETUADO COM SUCESO " + JSON.stringify(data));
       this.loginSucess(data);      
     }, error => {
+      this.messageService.showError('Falha ao logar', 'Falha na autenticação. Favor verificar o usuário e senha');
       console.log('Error ao fazer LOGIN');
     });
   }
@@ -33,8 +36,9 @@ export class LoginUserComponent implements OnInit {
     localStorage.setItem('refreshToken', data.refresh_Token);
     this.apiService.getMainUser(localStorage.getItem('accessToken')).subscribe(user => {
       this.redirectPage(user);
+      this.messageService.showSucess('Bem Vindo', 'Login efetuado com sucesso. Bem Vindo');
     }, error => {
-      console.log('Error ao pegar o usuário logado');      
+      console.log('Error ao pegar o usuário logado', error);      
     });
 
   }
