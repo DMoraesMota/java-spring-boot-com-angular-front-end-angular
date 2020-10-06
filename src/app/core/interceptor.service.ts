@@ -19,7 +19,7 @@ export class InterceptorService implements HttpInterceptor {
   constructor( private ApiService: ApiService, private router:Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = localStorage.getItem('acessToken');
+    const token: string = localStorage.getItem('accessToken');
 
     if(token){
       request = request.clone({headers: request.headers.set('Authorization', 'Bearer' + token)});
@@ -43,10 +43,11 @@ export class InterceptorService implements HttpInterceptor {
               return this.handleErrorGeneral(error);
             case 403:
               console.log('Error 403');
-              return this.getAcessToken(request, next);;
+              return this.getaccessToken(request, next);;
             case 0:
               console.log('Error 0');
-              return this.getAcessToken(request, next);
+              localStorage.removeItem('accessToken');
+              return this.getaccessToken(request, next);
             case 401:
               console.log('Error 401');
               return  this.router.navigate(['login']);
@@ -63,11 +64,11 @@ export class InterceptorService implements HttpInterceptor {
     );
   }
 
-  private getAcessToken( req: HttpRequest<any>, next: HttpHandler) : Observable<any> {
-    return this.ApiService.getAcessToken(localStorage.getItem('refreshToken'))
+  private getaccessToken( req: HttpRequest<any>, next: HttpHandler) : Observable<any> {
+    return this.ApiService.getaccessToken(localStorage.getItem('refreshToken'))
       .switchMap(resp =>{
-        localStorage.setItem('acessToken', resp.acess_token);
-        const token = localStorage.getItem('acessToken');
+        localStorage.setItem('accessToken', resp.acess_token);
+        const token = localStorage.getItem('accessToken');
         req = req.clone({headers: req.headers.set('Authorization', 'Bearer' + token)});
         return next.handle(req);
       });

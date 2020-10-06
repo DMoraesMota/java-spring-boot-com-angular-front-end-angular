@@ -29,9 +29,9 @@ export class LoginUserComponent implements OnInit {
   public loginSucess(data: any) {
 
     localStorage.clear();
-    localStorage.setItem('acessToken', data.access_token);    
+    localStorage.setItem('accessToken', data.access_token);    
     localStorage.setItem('refreshToken', data.refresh_Token);
-    this.apiService.getMainUser(localStorage.getItem('acessToken')).subscribe(user => {
+    this.apiService.getMainUser(localStorage.getItem('accessToken')).subscribe(user => {
       this.redirectPage(user);
     }, error => {
       console.log('Error ao pegar o usuário logado');      
