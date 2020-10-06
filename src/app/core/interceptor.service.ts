@@ -43,11 +43,11 @@ export class InterceptorService implements HttpInterceptor {
               return this.handleErrorGeneral(error);
             case 403:
               console.log('Error 403');
-              return this.getaccessToken(request, next);;
+              return this.getAccessToken(request, next);;
             case 0:
               console.log('Error 0');
               localStorage.removeItem('accessToken');
-              return this.getaccessToken(request, next);
+              return this.getAccessToken(request, next);
             case 401:
               console.log('Error 401');
               return  this.router.navigate(['login']);
@@ -64,8 +64,8 @@ export class InterceptorService implements HttpInterceptor {
     );
   }
 
-  private getaccessToken( req: HttpRequest<any>, next: HttpHandler) : Observable<any> {
-    return this.ApiService.getaccessToken(localStorage.getItem('refreshToken'))
+  private getAccessToken( req: HttpRequest<any>, next: HttpHandler) : Observable<any> {
+    return this.ApiService.getAccessToken(localStorage.getItem('refreshToken'))
       .switchMap(resp =>{
         localStorage.setItem('accessToken', resp.acess_token);
         const token = localStorage.getItem('accessToken');

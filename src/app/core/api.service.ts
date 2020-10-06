@@ -40,7 +40,7 @@ export class ApiService {
     return this.httpClient.get<any>(`${this.baseUrl}` + '/main', AppUtils.OPTIONS_OBJECTO);
   }
 
-  getAcessToken(refreshToken): Observable<any> {
+  getAccessToken(refreshToken): Observable<any> {
 
     const params = new HttpParams()
       .set('grant_type', 'refresh_token')
