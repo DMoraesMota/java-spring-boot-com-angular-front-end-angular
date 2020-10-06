@@ -18,7 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './core/api.service';
 import { InterceptorService } from './core/interceptor.service';
 import { AuthGuard } from './core/guards/auth.guard';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageService } from './core/message.service';
 
@@ -45,7 +45,8 @@ import { MessageService } from './core/message.service';
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-top-center'
-    })
+      })
+
   ],
   providers: [ApiService, AuthGuard, MessageService,
     {

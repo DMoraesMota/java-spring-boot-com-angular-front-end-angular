@@ -41,7 +41,7 @@ export class InterceptorService implements HttpInterceptor {
                 this.messageService.showWarning('Falha de registro', 'O e-mail utilizado no cadastro está sendo usado por outro usuário');
                 return this.handleErrorGeneral(error);
             case 404:
-              this.messageService.showError('Usuário não encontrado', 'Favor verificar se seu e-mail foi digitado corretamente';
+              this.messageService.showError('Usuário não encontrado', 'Favor verificar se seu e-mail foi digitado corretamente');
               return this.handleErrorGeneral(error);
             case 403:
               console.log('Error 403');
