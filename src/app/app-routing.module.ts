@@ -7,9 +7,10 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { ResendRegistrationTokenComponent } from './components/resend-registration-token/resend-registration-token.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  {path : '', component : LoginUserComponent},
+  {path : '', component : HomeComponent},
    { path: 'login', component: LoginUserComponent },
    { path: 'register-user', component: RegisterUserComponent },
    { path: 'resend-register-token', component:  ResendRegistrationTokenComponent },

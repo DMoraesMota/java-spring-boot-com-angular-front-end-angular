@@ -12,6 +12,7 @@ import { UserLogin } from 'src/app/core/model/login';
 export class LoginUserComponent implements OnInit {
 
   user = new UserLogin();
+  submitted = false;
 
   constructor(private apiService: ApiService, 
               private router: Router,
@@ -21,11 +22,13 @@ export class LoginUserComponent implements OnInit {
   }
 
   public login(){
+    this.submitted = true;
     this.apiService.login(this.user).subscribe(data => {
-      this.loginSucess(data);      
-    }, error => {
+    this.loginSucess(data); 
+    this.submitted = false;     
+    }, error => {      
       this.messageService.showError('Falha ao logar', 'Falha na autenticação. Favor verificar o usuário e senha');
-      console.log('Error ao fazer LOGIN');
+      this.submitted = false;
     });
   }
 

@@ -1,24 +1,73 @@
-<section class="grey-text w-responsive mx-auto p-5">
-    <form #loginForm="ngForm">
-        <h1 class="h4 mb-4 text-center font-weight-bold">Login</h1>
-        <div class="form-group">
-            <label for="email">Usuário</label>
-            <input type="text" class="form-control" id="email" placeholder="Nome de usuário" required
-                [(ngModel)]="user.email" name="email" #email="ngModel">
-            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                Favor digitar o nome de usuário!
-            </div>
-        </div>
 
-        <div class="form-group">
-            <label for="password">Senha</label>
-            <input type="password" class="form-control" id="password" placeholder="Senha" required
-                [(ngModel)]="user.password" name="password" #password="ngModel">
-            <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
-                Favor digitar a senha!
+  <!-- Main navigation -->
+  <header>
+  
+    <!-- Full Page Intro -->
+    <div class="view grey lighten-3">
+        <!-- Content -->
+        <div class="container h-100">
+          <!--Grid row-->
+          <div class="row align-items-center h-100">
+            <!--Grid column-->
+            <div class="col-md-6">
+              <h1 class="mb-4 text-center">Com o cadastro <span class="text-warning">Realizado e confirmado</span><br>
+                <span class="cyan-text">vamos</span> Acessar o sistema.
+              </h1>             
+              
+              <form #loginForm="ngForm">
+              <div class="card">
+                <div class="card-body z-depth-2 px-4">
+
+                  <div class="md-form">
+                    <i class="fa fa-user prefix grey-text"></i>
+                    <label for="email">Usuário</label>
+                    <input type="text" class="form-control" id="email" placeholder="Nome de usuário" required
+                        [(ngModel)]="user.email" name="email" #email="ngModel" mdbInput mdbValidate>
+                    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                        Necessário o e-mail para logar!
+                    </div>
+                  </div>
+
+                  <div class="md-form">
+                    <i class="fas fa-key prefix grey-text"></i>
+                    <label for="password">Senha</label>
+                    <input type="password" class="form-control" id="password" placeholder="Senha" required
+                        [(ngModel)]="user.password" name="password" #password="ngModel" mdbInput mdbValidate>
+                    <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+                        Necessário a senha para logar!
+                    </div>
+                  </div>
+
+                  <div class="text-center my-3">
+                    <button *ngIf="!submitted" class="btn btn-dark btn-block" (click)="login()" [disabled]="!loginForm.form.valid">Entrar</button>
+                    <button *ngIf="submitted" class="btn btn-dark btn-block" type="button">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="text-center my-3">
+                <p>Ainda não é cadastrado? <a [routerLink]="['/register-user']">Registre-se</a></p>
+                <p>Esqueceu a <a [routerLink]="['/register-user']">Senha</a></p>
             </div>
+              
+            </div>
+            <!--Grid column-->
+         
+            <!--Grid column-->
+            <div class="col-md-6">
+              <img src="https://mdbootstrap.com/img/illustrations/hiker-man-colour.svg" alt="" class="img-fluid">
+            </div>
+            <!--Grid column-->
+          </div>
+          <!--Grid row-->
         </div>
-        <button class="btn btn-dark btn-block" (click)="login()"
-            [disabled]="!loginForm.form.valid">Entrar</button>
-    </form>
-</section>
+        <!-- Content -->
+      </div>
+    <!-- Full Page Intro -->
+    
+  </header>
+  <!-- Main navigation -->

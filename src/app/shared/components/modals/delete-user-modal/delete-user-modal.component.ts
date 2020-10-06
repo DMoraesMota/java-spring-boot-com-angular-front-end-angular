@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 })
 export class DeleteUserModalComponent implements OnInit {
 
-  @ViewChild('deleteUserModal') public deleteUserModal;
+  @ViewChild('deleteUserModal', {static: false}) public deleteUserModal;
   @Input() recebeItem;
   @Output() resposta = new EventEmitter();
   recebeTitulo = 'Aplicação Spring Boot e Angular 7';

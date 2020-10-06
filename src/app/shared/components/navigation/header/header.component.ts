@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    this.apiService.logout().subscribe(()=> {
+      this.apiService.logout().subscribe(()=> {
       this.clearLocalStorage();
       this.messageService.showSucess('Logout Sucesso', 'Logout efetuado com sucesso');
       this.router.navigate(['login'])

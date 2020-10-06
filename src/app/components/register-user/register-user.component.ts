@@ -30,8 +30,9 @@ export class RegisterUserComponent implements OnInit, OnDestroy {
   }
 
   save(): void{
-    this.submitted = true;
-    this.apiService.registerUser(this.user).subscribe(data =>{
+      this.submitted = true;
+      this.apiService.registerUser(this.user).subscribe(data =>{
+      this.submitted = false;
       this.messageService.showSucess('Usuário salvo com sucesso', 'Usuário cadastrado no sistema. ');
       this.goBack();
     }, error => {

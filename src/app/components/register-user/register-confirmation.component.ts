@@ -15,6 +15,7 @@ import { MessageService } from 'src/app/core/message.service';
 })
 export class RegisterConfirmationComponent implements OnInit {
 
+    submitted = false;
     public token: string;
 
   constructor(private apiService: ApiService, 
@@ -24,11 +25,14 @@ export class RegisterConfirmationComponent implements OnInit {
               private messageService: MessageService) { }
 
   ngOnInit(): void {
+      this.submitted = true;
       this.token = this.route.snapshot.paramMap.get('token');
       this.apiService.confirmationRegisterToken(this.token).subscribe(register => {
-        this.messageService.showSucess('Registro validado', 'Usuário registrado com sucesso');
-        this.router.navigate(['login']);
+      this.messageService.showSucess('Registro validado', 'Usuário registrado com sucesso');
+      this.router.navigate(['login']);
+      this.submitted = false;
       }, error => {
+        this.submitted = false;
         this.messageService.showError('Problema na confirmação do registro', 'Falha na confirmação de registro');
         console.log('Erro na confirmação de registro!! ', error);
         this.router.navigate(['resend-register-token']);
