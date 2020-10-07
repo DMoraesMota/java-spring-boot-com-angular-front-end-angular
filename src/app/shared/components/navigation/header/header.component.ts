@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/api.service';
 import { MessageService } from 'src/app/core/message.service';
+import { UserDTO } from 'src/app/core/model/userDTO';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,21 @@ import { MessageService } from 'src/app/core/message.service';
 })
 export class HeaderComponent implements OnInit {
 
+  users: UserDTO[];
+
   constructor(private apiService: ApiService, 
               private router: Router,
               private messageService: MessageService) { }
 
   ngOnInit(): void {
+    if (!this.apiService.isAuthenticate()) {
+      this.router.navigate(['login']);
+    }
+    this.apiService.getUsers().subscribe(users => {
+      this.users = users;
+    }, error => {
+      this.messageService.showError('Lista de usuários', 'Falha ao carregar a lista de usuários');
+    });
   }
 
   logout(){
