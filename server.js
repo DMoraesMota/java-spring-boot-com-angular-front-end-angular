@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const nameApp = 'sba7-app';
+const nameApp = "sba7-app";
 const app = express();
 // Servir arquivos estáticos
 app.use(express.static(`${__dirname}/dist/${nameApp}`));
@@ -9,4 +9,4 @@ app.get('/*', function(req, res) {
 res.sendFile(path.join(`${__dirname}/dist/${nameApp}/index.html`));
 });
 // Porta padrão do Heroku
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 8080);
